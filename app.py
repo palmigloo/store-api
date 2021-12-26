@@ -16,7 +16,9 @@ if uri.startswith("postgres://"):
     uri = uri.replace("postgres://", "postgresql://", 1)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL','sqlite:///data.db')    # can also be Mysql, postgreSql, etc.
+sqlite_uri = 'sqlite:///data.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = uri if uri else sqlite_uri
+#os.environ.get('DATABASE_URL','sqlite:///data.db')    # can also be Mysql, postgreSql, etc.
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'abigail'
 api = Api(app)
